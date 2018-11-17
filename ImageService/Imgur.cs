@@ -22,8 +22,6 @@ namespace Dombo.ServiceProvider.ImageService
         public ImgurService(string jsonConfig)
         {
             ServiceConfig config = JsonConvert.DeserializeObject<ServiceConfig>(jsonConfig);
-
-
             _url = config.BaseUrl;
             _getImageLink = config.GetImageUrl;
             _postImageLink = config.PostImageUrl;
