@@ -1,0 +1,6 @@
+{
+  "BaseUrl": "https://api.imgur.com",
+  "Token": "",
+  "GetImageUrl": "3/account/me/images",
+  "PostImageUrl": "3/image"
+} 
