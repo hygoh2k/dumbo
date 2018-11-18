@@ -1,4 +1,6 @@
-﻿using Dombo.ServiceProvider;
+﻿
+using Dombo.Common.Model;
+using Dombo.ServiceProvider;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -6,19 +8,7 @@ using System.Text;
 
 namespace Dombo.JobScheduler
 {
-    public interface ICommandResult
-    {
-        string StatusCode { get; set; }
-        object Result { get; set; }
-    }
 
-
-    public interface ICommand
-    {
-        string ArgumentCollection { get; set; }
-        ICommandResult Run();
-
-    }
 
     public class ImageCommandResult : ICommandResult
     {
