@@ -1,5 +1,4 @@
-﻿
-using Dombo.ServiceProvider;
+﻿using Dombo.CommonModel;
 using Dombo.ServiceProvider.ImageService;
 using Newtonsoft.Json;
 using System;

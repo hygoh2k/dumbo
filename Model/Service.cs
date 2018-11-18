@@ -1,9 +1,14 @@
-﻿
-using System;
+﻿using System;
 using System.Net;
 
-namespace Dombo.ServiceProvider
+namespace Dombo.CommonModel
 {
+    public struct ServiceResult
+    {
+        public HttpStatusCode ResultStatus { get; set; }
+        public string Result { get; set; }
+    }
+
     public class ServiceConfig
     {
         public string BaseUrl { get; set; }
@@ -24,21 +29,14 @@ namespace Dombo.ServiceProvider
         public bool success { get; set; }
         public int status { get; set; }
         public DataContent data { get; set; }
-
     }
 
-    public struct ServiceResult
-    {
-        public HttpStatusCode ResultStatus { get; set; }
-        public string Result { get; set; }
-
-
-    }
+    
 
     public interface IApiService
     {
         string GetImage();
         ServiceResult UploadImages(string path);
-
+        //ISerializableResult GetUploadJobStatusType();
     }
 }

@@ -1,6 +1,5 @@
 ﻿
-using Dombo.Common.Model;
-using Dombo.ServiceProvider;
+using Dombo.CommonModel;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -38,7 +37,7 @@ namespace Dombo.JobScheduler
             var result = _service.UploadImages(ArgumentCollection);
             var resultData = Newtonsoft.Json.JsonConvert.DeserializeObject<ServiceData>(result.Result);
 
-            return new ImageCommandResult() { Result=result };
+            return new ImageCommandResult() { Result=result, StatusCode="Running" };
         }
     }
 }

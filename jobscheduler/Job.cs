@@ -7,7 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using Dombo.Common.Model;
+using Dombo.CommonModel;
 using Newtonsoft;
 
 
@@ -27,58 +27,62 @@ namespace Dombo.JobScheduler
 
     public class JobDetails
     {
-        public JobDetails() => JobId = Guid.NewGuid().ToString();
+        public JobDetails()
+        {
+            JobId = Guid.NewGuid().ToString();
+            CreatedDateTime = DateTime.Now;
+        }
 
         public string JobId { get; private set; }
 
+        public DateTime CreatedDateTime { get; private set; }
+        public DateTime FinishedDateTime { get; private set; }
+
         List<ICommand> _commandCollection = new List<ICommand>();
 
-        public IList<ICommand> CommandCollection
-        {
-            get
-            {
-                return _commandCollection;
-            }
-        }
+        public IList<ICommand> CommandCollection => _commandCollection;
 
         private ConcurrentDictionary<ICommand, ICommandResult> _jobStatus = new ConcurrentDictionary<ICommand, ICommandResult>();
+
+        private volatile bool _jobStarted = false;
 
 
         public void Execute()
         {
-            ////////_jobStatus = new ConcurrentDictionary<ICommand, ICommandResult>();
+            _jobStarted = true;
+
             _commandCollection.ForEach(x => _jobStatus.TryAdd(x, new JobResult() ));
 
             foreach (var cmd in CommandCollection)
             {
                 _jobStatus[cmd] = cmd.Run(); //update the status
             }
+
+            FinishedDateTime = DateTime.Now;
         }
 
-        public string JobStatus()
+        public bool IsJobStarted()
         {
-            var jobSnapshot = _jobStatus.ToList(); //create a snapshot
+            return _jobStarted;
+        }
 
-            List<KeyValuePair<ICommand, ICommandResult>> status = new List<KeyValuePair<ICommand, ICommandResult>>();
+            
 
-            foreach(var item in _commandCollection)
-            {
-                if( jobSnapshot.Any(x => x.Key == item))
-                {
-                    status.Add(jobSnapshot.FirstOrDefault(x => x.Key == item));
-                }
-                else
-                {
-                    status.Add(new KeyValuePair<ICommand, ICommandResult>(item, new JobResult()));
-                }
-            }
+        public KeyValuePair<ICommand, ICommandResult>[] JobStatus()
+        {
+            return  _jobStatus.ToArray(); //create a snapshot and return
 
+        }
 
-            return Newtonsoft.Json.JsonConvert.SerializeObject(status);
-
+        public string GetJobId()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new JobIdResult(JobId));
         }
 
     }
+
+    
+
 
     public abstract class JobServiceBase
     {

@@ -21,19 +21,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceProvider", "ServiceP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extension", "Extension\Extension.csproj", "{3AD8A991-25BB-4D4E-9B4A-3005205E0AA5}"
 EndProject
-
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtensionTest", "ExtensionTest\ExtensionTest.csproj", "{DC329553-C10E-4B7A-9952-5B9F3534333A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{E38D523B-5584-4BB3-8D79-D681F6C94D36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{9EB16CAA-094B-4046-B839-948AD14280DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonModel", "Model\CommonModel.csproj", "{9EB16CAA-094B-4046-B839-948AD14280DF}"
 EndProject
-
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestApp", "TestApp", "{420BDAF5-9D84-4D3F-8F01-BCFA618D772B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{A9B3C21A-461E-4E19-9B36-F1D47044F3AE}"
 EndProject
-
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -1,4 +1,6 @@
-﻿using Dombo.ServiceProvider;
+﻿
+
+using Dombo.CommonModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,6 +22,7 @@ namespace Dombo.ServiceProvider.ImageService
         private readonly string _token;
 
 
+
         public ImgurService(string jsonConfig)
         {
             ServiceConfig config = JsonConvert.DeserializeObject<ServiceConfig>(jsonConfig);
@@ -39,6 +42,11 @@ namespace Dombo.ServiceProvider.ImageService
             _token = token;
 
         } 
+
+        //public ISerializableResult GetUploadJobStatusType()
+        //{
+        //    return new ImageUploadJobStatusResult();
+        //}
 
 
         private HttpClient CreateClient()

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Dombo.Common.Model
+namespace Dombo.CommonModel
 {
     public interface ICommandResult
     {

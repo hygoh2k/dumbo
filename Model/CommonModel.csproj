@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <AssemblyName>Dombo.Common.Model</AssemblyName>
-    <RootNamespace>Dombo.Common.Model</RootNamespace>
+    <AssemblyName>Dombo.CommonModel</AssemblyName>
+    <RootNamespace>Dombo.CommonModel</RootNamespace>
   </PropertyGroup>
 
 </Project>

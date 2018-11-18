@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Model\Model.csproj" />
-    <ProjectReference Include="..\ServiceProvider\ServiceProvider.csproj" />
+    <ProjectReference Include="..\Model\CommonModel.csproj" />
   </ItemGroup>
 
 </Project>

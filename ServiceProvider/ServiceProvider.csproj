@@ -6,8 +6,4 @@
     <RootNamespace>Dombo.ServiceProvider</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Model\Model.csproj" />
-  </ItemGroup>
-
 </Project>
