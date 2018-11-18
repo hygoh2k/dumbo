@@ -36,7 +36,7 @@ namespace Dombo.ServiceProvider
 
     public interface IApiService
     {
-        string[] GetImage();
+        string GetImage();
         ServiceResult UploadImages(string path);
 
     }

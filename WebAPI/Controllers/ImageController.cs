@@ -11,9 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebAPI.Controllers
 {
     
-
-
-
     [Route("v1/image")]
     [ApiController]
     public class ImageController : ControllerBase
@@ -36,7 +33,7 @@ namespace WebAPI.Controllers
         
         //GET v1/image
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<string> Get()
         {
             var jobList = _jobService.GetJobs();
             return _imageServie.GetImage();

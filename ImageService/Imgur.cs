@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace Dombo.ServiceProvider.ImageService
 {
 
+
     public class ImgurService : IApiService
     {
         private readonly string _url;
@@ -26,7 +27,6 @@ namespace Dombo.ServiceProvider.ImageService
             _getImageLink = config.GetImageUrl;
             _postImageLink = config.PostImageUrl;
             _token = config.Token;
-
         }
 
 
@@ -80,10 +80,10 @@ namespace Dombo.ServiceProvider.ImageService
             return UploadImageAsync(imageUrl).Result;
         }
 
-        public string[] GetImage()
+        public string GetImage()
         {
-            string result = GetImageAsync().Result.Result;
-            return new string[] { result };
+            UploadedImage result = JsonConvert.DeserializeObject<UploadedImage>(GetImageAsync().Result.Result);
+            return JsonConvert.SerializeObject(new UploadedImageResult(result.data));
         }
     }
 }
