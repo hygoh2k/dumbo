@@ -101,7 +101,7 @@ namespace WebAPI.Controllers
 
             if (job != null)
             {
-                jobStatus.created = job.CreatedDateTime.ToLongDateString();
+                jobStatus.created = job.CreatedDateTime.ToString("O");
                 jobStatus.id = job.JobId;
                 var jobStatusList = job.JobStatus();
                 foreach (var item in jobStatusList)
@@ -128,7 +128,7 @@ namespace WebAPI.Controllers
                 jobStatus.status = (job.IsJobStarted() == false) ?
                     "pending" : ((jobStatus.uploaded.pending.Length == 0) ? "completed" : "in-progress");
 
-                jobStatus.finished = jobStatus.status.Equals("completed") ? job.FinishedDateTime.ToLongDateString() : null;
+                jobStatus.finished = jobStatus.status.Equals("completed") ? job.FinishedDateTime.ToString("O") : null;
             }
 
 
@@ -158,14 +158,14 @@ namespace WebAPI.Controllers
         [Route("upload")]
         public ActionResult<string> PostUpload( [FromBody] object obj)
         {
-            // ActionResult<string> rest = new ActionResult<string>("{no result}");
 
             var uploadSetting = Newtonsoft.Json.JsonConvert.DeserializeObject<ImageControllerUpload>(obj.ToString());
 
             var uploadJob = new JobDetails();
 
             uploadJob.CommandCollection.AddRangeEx(
-                        uploadSetting.urls.Select(x => new ImageUploadCommand(_imageServie, x))
+                        uploadSetting.urls.Distinct()
+                        .Select(x => new ImageUploadCommand(_imageServie, x))
                         .ToArray());
             _jobService.Add(uploadJob);
 
