@@ -27,16 +27,24 @@ namespace Dombo.JobScheduler
 
     public class JobDetails
     {
-        public JobDetails()
+        /// <summary>
+        /// dont use this, json serializer will call this for new object
+        /// </summary>
+        //public JobDetails()
+        //{
+        //    JobId = Guid.NewGuid().ToString();
+        //    CreatedDateTime = DateTime.UtcNow;
+        //}
+
+        public static JobDetails CreateNew()
         {
-            JobId = Guid.NewGuid().ToString();
-            CreatedDateTime = DateTime.Now;
+            return new JobDetails() { JobId = Guid.NewGuid().ToString(), CreatedDateTime = DateTime.UtcNow };
         }
 
-        public string JobId { get; private set; }
+        public string JobId { get;  set; }
 
-        public DateTime CreatedDateTime { get; private set; }
-        public DateTime FinishedDateTime { get; private set; }
+        public DateTime CreatedDateTime { get;  set; }
+        public DateTime FinishedDateTime { get;  set; }
 
         List<ICommand> _commandCollection = new List<ICommand>();
 
@@ -58,7 +66,7 @@ namespace Dombo.JobScheduler
                 _jobStatus[cmd] = cmd.Run(); //update the status
             }
 
-            FinishedDateTime = DateTime.Now;
+            FinishedDateTime = DateTime.UtcNow;
         }
 
         public bool IsJobStarted()
