@@ -109,11 +109,11 @@ namespace WebAPI.Controllers
                         if (imageData.data.link != null)
                             jobStatus.uploaded.AddJob(JobStatusType.COMPLETE, imageData.data.link);
                         else
-                            jobStatus.uploaded.AddJob(JobStatusType.FAILED, item.Key.ArgumentCollection);
+                            jobStatus.uploaded.AddJob(JobStatusType.FAILED, item.Key.Argument);
                     }
                     else
                     {
-                        jobStatus.uploaded.AddJob(JobStatusType.PENDING, item.Key.ArgumentCollection);
+                        jobStatus.uploaded.AddJob(JobStatusType.PENDING, item.Key.Argument);
                     }
 
                 }

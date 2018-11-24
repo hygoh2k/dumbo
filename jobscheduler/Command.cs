@@ -19,14 +19,14 @@ namespace Dombo.JobScheduler
 
     public class ImageUploadCommand : ICommand
     {
-        public string ArgumentCollection { get; set; }
+        public string Argument { get; set; }
 
         IApiService _service;
 
         public ImageUploadCommand(IApiService service, string imageUrl)
         {
             _service = service;
-            ArgumentCollection = imageUrl;
+            Argument = imageUrl;
 
         }
 
@@ -34,7 +34,7 @@ namespace Dombo.JobScheduler
 
         public ICommandResult Run()
         {
-            var result = _service.UploadImages(ArgumentCollection);
+            var result = _service.UploadImages(Argument);
             var resultData = Newtonsoft.Json.JsonConvert.DeserializeObject<ServiceData>(result.Result);
 
             return new ImageCommandResult() { Result=result, StatusCode="Running" };

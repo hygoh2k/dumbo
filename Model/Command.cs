@@ -13,7 +13,7 @@ namespace Dombo.CommonModel
 
     public interface ICommand
     {
-        string ArgumentCollection { get; set; }
+        string Argument { get; set; }
         ICommandResult Run();
 
     }
