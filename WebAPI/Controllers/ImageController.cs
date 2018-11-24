@@ -64,9 +64,9 @@ namespace WebAPI.Controllers
     public class ImageController : ControllerBase
     {
 
-        class ImageControllerUpload
+        public class UploadParameter
         {
-            public string[] urls { get; set; }
+            public virtual string[] urls { get; set; }
         }
 
 
@@ -82,7 +82,6 @@ namespace WebAPI.Controllers
         [HttpGet]
         public ActionResult<string> Get()
         {
-            var jobList = _jobService.GetJobs();
             return _imageServie.GetImage();
         }
 
@@ -92,12 +91,7 @@ namespace WebAPI.Controllers
         public ActionResult<string> GetJob(string id)
         {
             var job = _jobService.GetJobs().SingleOrDefault(x => x.JobId == id);
-            JobStatusModel jobStatus = new JobStatusModel()
-            {
-
-                uploaded = new JobStatusContent()
-
-            };
+            JobStatusModel jobStatus = new JobStatusModel(){ uploaded = new JobStatusContent() };
 
             if (job != null)
             {
@@ -124,7 +118,6 @@ namespace WebAPI.Controllers
 
                 }
 
-                //if(jobStatus.uploaded.complete.Length == job.JobStatus().Length)
                 jobStatus.status = (job.IsJobStarted() == false) ?
                     "pending" : ((jobStatus.uploaded.pending.Length == 0) ? "completed" : "in-progress");
 
@@ -150,38 +143,31 @@ namespace WebAPI.Controllers
             return GetJob(id);
         }
 
-
-
-
         // POST v1/images/upload
         [HttpPost]
         [Route("upload")]
-        public ActionResult<string> PostUpload( [FromBody] object obj)
+        public ActionResult<string> PostUpload( [FromBody] UploadParameter obj)
         {
-
-            var uploadSetting = Newtonsoft.Json.JsonConvert.DeserializeObject<ImageControllerUpload>(obj.ToString());
-
-            var uploadJob = new JobDetails();
-
+            var uploadJob = JobDetails.CreateNew();
             uploadJob.CommandCollection.AddRangeEx(
-                        uploadSetting.urls.Distinct()
-                        .Select(x => new ImageUploadCommand(_imageServie, x))
-                        .ToArray());
-            _jobService.Add(uploadJob);
+                                obj.urls.Distinct()
+                                   .Select(x => new ImageUploadCommand(_imageServie, x))
+                                   .ToArray());
 
+            _jobService.Add(uploadJob);//add the job to run
             return Ok(uploadJob.GetJobId());
         }
 
 
 
-        // POST v1/images/upload
-        [HttpPost]
-        [Route("stop")]
-        public ActionResult<string> PostStop([FromBody] object obj)
-        {
-            _jobService.Stop();
+        //// POST v1/images/upload
+        //[HttpPost]
+        //[Route("stop")]
+        //public ActionResult<string> PostStop([FromBody] object obj)
+        //{
+        //    _jobService.Stop();
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
     }
 }
