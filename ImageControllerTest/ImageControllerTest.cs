@@ -12,7 +12,7 @@ using static WebAPI.Controllers.ImageController;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace ImageControllerTest
+namespace ControllerTest
 {
     /// <summary>
     /// API tests for ImageController

@@ -7,7 +7,7 @@ namespace Dombo.Extension
     public static class CollectionExtension
     {
         //extention to add range
-         public static void AddRangeEx<T>(this IList<T> list, T[] value)
+        public static void AddRangeEx<T>(this IList<T> list, T[] value)
         {
             foreach (var item in value)
             {

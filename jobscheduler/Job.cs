@@ -35,6 +35,7 @@ namespace Dombo.JobScheduler
         //    JobId = Guid.NewGuid().ToString();
         //    CreatedDateTime = DateTime.UtcNow;
         //}
+        
 
         public static JobDetails CreateNew()
         {
@@ -110,17 +111,22 @@ namespace Dombo.JobScheduler
 
 
 
-        public JobService()
+        public JobService(bool startService)
         {
             _jobCollection = new ConcurrentBag<JobDetails>();
             _pendingJobCollection = new ConcurrentStack<string>();
-            Start();//start the service !
+
+            if (startService)
+                Start();//start the service !
         }
 
         public override void Add(JobDetails job)
         {
-            _jobCollection.Add(job);
-            _pendingJobCollection.Push(job.JobId);
+            if (! _jobCollection.Any(x => x.JobId.Equals(job.JobId))) //add when job id is unique
+            {
+                _jobCollection.Add(job);
+                _pendingJobCollection.Push(job.JobId);
+            }
         }
 
 
