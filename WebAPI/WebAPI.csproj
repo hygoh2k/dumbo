@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\ValuesController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="appsettings.json" />
     <Content Remove="imgur_setting.json" />
   </ItemGroup>
