@@ -46,8 +46,7 @@ namespace WebAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             //services.AddSingleton<JobServiceBase, JobService>();
             services.AddSingleton<JobServiceBase>(new Dombo.JobScheduler.JobService(true));
-            services.AddSingleton<IApiService>(new ImgurService(File.ReadAllText(Path.Combine(_env.ContentRootPath, "imgur_setting.json"))));
-
+            services.AddSingleton<IApiService>(new ImgurService( new HttpClientProxy(), File.ReadAllText(Path.Combine(_env.ContentRootPath, "imgur_setting.json"))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

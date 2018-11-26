@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Dombo.CommonModel
 {
@@ -39,4 +42,14 @@ namespace Dombo.CommonModel
         ServiceResult UploadImages(string path);
         //ISerializableResult GetUploadJobStatusType();
     }
+
+    public interface IHttpHandler
+    {
+        HttpResponseMessage Get(string url);
+        HttpResponseMessage Post(string url, HttpContent content);
+        Task<HttpResponseMessage> GetAsync(string url);
+        Task<HttpResponseMessage> PostAsync(string url, HttpContent content);
+        IHttpHandler CreateHandler(KeyValuePair<string, IEnumerable<string>>[] requestHeaderParams);
+    }
+
 }

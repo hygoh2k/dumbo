@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ImageService\ImageService.csproj" />
     <ProjectReference Include="..\jobscheduler\Jobscheduler.csproj" />
   </ItemGroup>
 

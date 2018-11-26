@@ -19,7 +19,8 @@ namespace ConsoleApp1
         
         static void Main(string[] args)
         {
-           ImgurService service = new ImgurService(@"https://api.imgur.com", @"199b7dbbdabc0cade4ef884875257c41daa8ac45");
+           ImgurService service = new ImgurService( new Dombo.ServiceProvider.ImageService.HttpClientProxy(),
+               @"https://api.imgur.com", @"199b7dbbdabc0cade4ef884875257c41daa8ac45");
            // var result = service.GetImage();
 
             var result = service.UploadImages(@"https://farm3.staticflickr.com/2879/11234651086_681b3c2c00_b_d.jpg"  );

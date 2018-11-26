@@ -7,6 +7,9 @@ using System.Threading;
 
 namespace ServiceTest
 {
+    /// <summary>
+    /// this testclass contains tests for JobScheduler functionality
+    /// </summary>
     public class JobSchedulerTest
     {
 
