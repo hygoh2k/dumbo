@@ -58,20 +58,20 @@ namespace WebAPI.Controllers
         }
     }
 
+    public class ImageUploadParameter
+    {
+        public virtual string[] urls { get; set; }
+    }
 
     [Route("v1/image")]
     [ApiController]
     public class ImageController : ControllerBase
     {
 
-        public class UploadParameter
-        {
-            public virtual string[] urls { get; set; }
-        }
-
-
         JobServiceBase _jobService;
         IApiService _imageServie;
+
+
         public ImageController(JobServiceBase jobService, IApiService imageService)
         {
             _jobService = jobService;
@@ -146,7 +146,7 @@ namespace WebAPI.Controllers
         // POST v1/images/upload
         [HttpPost]
         [Route("upload")]
-        public ActionResult<string> PostUpload( [FromBody] UploadParameter obj)
+        public ActionResult<string> PostUpload( [FromBody] ImageUploadParameter obj)
         {
             var uploadJob = JobDetails.CreateNew();
             uploadJob.CommandCollection.AddRangeEx(

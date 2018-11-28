@@ -29,7 +29,7 @@ namespace ControllerTest
             var jobService = new SimpleJobServiceMock();
             var response = new ImageController(jobService, new Mock<IApiService>().Object)
                 .PostUpload(
-                new UploadParameter()
+                new ImageUploadParameter()
                 {
                     urls = new string[] { }
                 });
@@ -51,7 +51,7 @@ namespace ControllerTest
             var jobService = new SimpleJobServiceMock();
             var response = new ImageController(jobService, new Mock<IApiService>().Object)
                 .PostUpload(
-                new UploadParameter() {
+                new ImageUploadParameter() {
                     urls = new string[] { "http://dummyurl.com" }
                 });
 
@@ -61,6 +61,35 @@ namespace ControllerTest
                 x => x.JobId.Equals(JsonConvert.DeserializeObject<JobDetails>(result.Value.ToString()).JobId));
             Assert.Equal(1, job.CommandCollection.Count);
             Assert.Equal(@"http://dummyurl.com", job.CommandCollection[0].Argument);
+        }
+
+        /// <summary>
+        /// test for job posting for duplicated images
+        /// expected result: correct content, should only return unique images
+        /// </summary>
+        [Fact]
+        public void PostUploadJobDuplicatedUrls()
+        {
+            var jobService = new SimpleJobServiceMock();
+            var response = new ImageController(jobService, new Mock<IApiService>().Object)
+                .PostUpload(
+                    new ImageUploadParameter()
+                    {
+                        urls = new string[] {
+                            "http://dummyurl.com/img1.png",
+                            "http://dummyurl.com/img1.png",
+                            "http://dummyurl.com/img2.png"
+                        }
+                    });
+
+            OkObjectResult result = response.Result as OkObjectResult;
+            Assert.Equal(200, result.StatusCode);
+            var job = jobService.GetJobs().FirstOrDefault(
+                x => x.JobId.Equals(JsonConvert.DeserializeObject<JobDetails>(result.Value.ToString()).JobId));
+            Assert.Equal(2, job.CommandCollection.Count);
+            Assert.Equal("http://dummyurl.com/img1.png", job.CommandCollection[0].Argument);
+            Assert.Equal("http://dummyurl.com/img2.png", job.CommandCollection[1].Argument);
+            
         }
 
         /// <summary>
