@@ -13,12 +13,13 @@ using System.Threading.Tasks;
 
 namespace Dombo.ServiceProvider.ImageService
 {
+    /// <summary>
+    /// A proxy of HttpClient
+    /// 
+    /// </summary>
     public class HttpClientProxy : IHttpHandler
     {
         public HttpClient HttpClient { get; private set; }
-
-
-        //public KeyValuePair<string, IEnumerable<string>>[] RequestHeaderParams { get; set; }
 
         public IHttpHandler CreateHandler(KeyValuePair<string, IEnumerable<string>>[] RequestHeaderParams)
         {
@@ -33,7 +34,7 @@ namespace Dombo.ServiceProvider.ImageService
 
         public HttpResponseMessage Get(string url)
         {
-            //todo
+            //todo: not implemented yet
             throw new NotImplementedException();
         }
 
@@ -44,7 +45,7 @@ namespace Dombo.ServiceProvider.ImageService
 
         public HttpResponseMessage Post(string url, HttpContent content)
         {
-            //todo
+            //todo: not implemented yet
             throw new NotImplementedException();
         }
 
@@ -56,61 +57,64 @@ namespace Dombo.ServiceProvider.ImageService
 
     public class ImgurService : IApiService
     {
-        private readonly string _url;
-        private readonly string _getImageLink;
-        private readonly string _postImageLink;
-        private readonly string _token;
-        private readonly IHttpHandler _httpHandler;
+        private string _url;
+        private string _getImageLink;
+        private string _postImageLink;
+        private string _token;
+        private IHttpHandler _httpHandler;
 
 
+        /// <summary>
+        /// constructor that initialized from a json config file
+        /// </summary>
+        /// <param name="httpHandler"></param>
+        /// <param name="jsonConfig"></param>
         public ImgurService(IHttpHandler httpHandler, string jsonConfig)
         {
             ServiceConfig config = JsonConvert.DeserializeObject<ServiceConfig>(jsonConfig);
-            _url = config.BaseUrl;
-            _getImageLink = config.GetImageUrl;
-            _postImageLink = config.PostImageUrl;
-            _token = config.Token;
-            _httpHandler = httpHandler;
+
+            ConfigureImgurService(
+                httpHandler,
+                config.BaseUrl,
+                config.Token,
+                config.GetImageUrl,
+                config.PostImageUrl
+                );
         }
 
 
-        public ImgurService(IHttpHandler httpHandler, string url, string token, string getImageLink = @"3/account/me/images", string postImageLink = @"3/image")
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        /// <param name="httpHandler"></param>
+        /// <param name="url"></param>
+        /// <param name="token"></param>
+        /// <param name="getImageLink"></param>
+        /// <param name="postImageLink"></param>
+        public ImgurService(IHttpHandler httpHandler, 
+            string url, 
+            string token, 
+            string getImageLink = @"3/account/me/images", 
+            string postImageLink = @"3/image")
         {
-            
-            _url = url;
-            _getImageLink = getImageLink;
-            _postImageLink = postImageLink;
+            ConfigureImgurService(
+                httpHandler,
+                url,
+                token,
+                getImageLink,
+                postImageLink
+            );
+        }
+
+        private void ConfigureImgurService(IHttpHandler httpHandler, string baseUrl, string token, string getImageUrl, string postImageUrl)
+        {
+            _url = baseUrl;
+            _getImageLink = getImageUrl;
+            _postImageLink = postImageUrl;
             _token = token;
             _httpHandler = httpHandler;
+        }
 
-        } 
-
-        //public ISerializableResult GetUploadJobStatusType()
-        //{
-        //    return new ImageUploadJobStatusResult();
-        //}
-
-
-        //private HttpClient CreateClient()
-        //{
-        //    var client = new HttpClient();
-        //    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + _token);
-        //    return client;
-        //}
-
-
-        //private IHttpHandler CreateClient(KeyValuePair<string, IEnumerable<string>>[] requestHeaderParams)
-        //{
-
-        //    var client = new HttpClient();
-        //    foreach (var headerParam in requestHeaderParams)
-        //    {
-        //        client.DefaultRequestHeaders.Add(headerParam.Key, headerParam.Value);
-        //    }
-        //    //client.DefaultRequestHeaders.Add("Authorization", "Bearer " + _token);
-        //    //return client;
-        //    return new HttpClientHandler(client);
-        //}
 
         private async Task<ServiceResult> GetImageAsync()
         {
@@ -146,10 +150,28 @@ namespace Dombo.ServiceProvider.ImageService
             return UploadImageAsync(imageUrl).Result;
         }
 
+        /// <summary>
+        /// get the image in imgur service
+        /// </summary>
+        /// <returns>returns the result in json</returns>
         public string GetImage()
         {
-            UploadedImage result = JsonConvert.DeserializeObject<UploadedImage>(GetImageAsync().Result.Result);
-            return JsonConvert.SerializeObject(new UploadedImageResult(result.data));
+            var imgurResult = GetImageAsync();
+            //if (imgurResult.Result.ResultStatus == HttpStatusCode.OK)
+            //{
+            //    UploadedImage result = JsonConvert.DeserializeObject<UploadedImage>(imgurResult.Result.Result);
+            //    return JsonConvert.SerializeObject(new UploadedImageResult(result.data));
+            //}
+            //else
+            //{
+            //    //something wrong
+            //    return string.Empty;
+            //}
+
+            return imgurResult.Result.ResultStatus == HttpStatusCode.OK ?
+                 JsonConvert.SerializeObject(
+                     new UploadedImageResult(JsonConvert.DeserializeObject<UploadedImage>(imgurResult.Result.Result).data)) :
+                 string.Empty;
         }
     }
 }

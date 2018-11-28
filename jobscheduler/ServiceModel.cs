@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Dombo.JobScheduler
 {
+    /// <summary>
+    /// JobIdResult model
+    /// </summary>
     public class JobIdResult
     {
         public string jobId { get; private set; }

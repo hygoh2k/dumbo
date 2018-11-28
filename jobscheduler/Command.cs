@@ -1,21 +1,15 @@
 ﻿
 using Dombo.CommonModel;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace Dombo.JobScheduler
 {
-
 
     public class ImageCommandResult : ICommandResult
     {
         public string StatusCode { get; set; }
         public object Result { get; set; }
     }
-
-
 
     public class ImageUploadCommand : ICommand
     {
@@ -27,10 +21,7 @@ namespace Dombo.JobScheduler
         {
             _service = service;
             Argument = imageUrl;
-
         }
-
-
 
         public ICommandResult Run()
         {

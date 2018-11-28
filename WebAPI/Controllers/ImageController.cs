@@ -15,7 +15,7 @@ namespace WebAPI.Controllers
         public string link { get; set; }
     }
 
-    public class UploadedImageNew
+    public class ImageUploadStatus
     {
         public ImageItem data { get; set; }
         public bool success { get; set; }
@@ -103,8 +103,8 @@ namespace WebAPI.Controllers
                     
                     if (item.Value != null && item.Value.Result != null)
                     {
-                        UploadedImageNew imageData = Newtonsoft.Json.JsonConvert
-                                                        .DeserializeObject<UploadedImageNew>(((ServiceResult)item.Value.Result).Result.ToString());
+                        ImageUploadStatus imageData = Newtonsoft.Json.JsonConvert
+                                                        .DeserializeObject<ImageUploadStatus>(((ServiceResult)item.Value.Result).Result.ToString());
 
                         if (imageData.data.link != null)
                             jobStatus.uploaded.AddJob(JobStatusType.COMPLETE, imageData.data.link);
