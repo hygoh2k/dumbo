@@ -33,5 +33,6 @@ Setup the port in applicationUrl. Example:
 ## Running the WebAPI:
 1) cd to <project_root>\WebAPI
 2) execute the command: "dotnet run"
+3) the service will be started. 
 
 
