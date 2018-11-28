@@ -9,7 +9,7 @@ optional: Visual Studio 2017
 
 
 ## Configuration
-### Port Congiguration
+### Port Configuration
 <project_root>\WebAPI\Properties\launchSettings.json:
 Setup the port in applicationUrl. Example:
 
@@ -44,7 +44,7 @@ Setup the port in applicationUrl. Example:
 3) the service will be started. 
 
 ### In release mode (Currently only available for windows)
-1) download https://github.com/hygoh2k/dumbo/releases/tag/vx.x
+1) download the release at https://github.com/hygoh2k/dumbo/releases/tag/
 2) unzip the file and go into the folder
 3) in command prompt, execute "WebAPI.exe" to start the service
 
