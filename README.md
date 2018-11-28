@@ -1,10 +1,10 @@
 # Dumbo
-A Web api job scheduler written in C$ .NET CORE 
+A Web api job scheduler written in C# .NET CORE 
 This application is tested in Windows7 x64 with .NET CORE 2.1
 
 
 ## Requirements
-required: .NET Core2.1
+required for development mode: .NET Core2.1
 optional: Visual Studio 2017
 
 
@@ -32,7 +32,7 @@ Setup the port in applicationUrl. Example:
   "PostImageUrl": "3/image"
 } 
 
-<imgur_api_token>: See https://apidocs.imgur.com on requesting the tokens from imgur
+<imgur_api_token>: The oauth2 access token. See https://apidocs.imgur.com for requesting the tokens from imgur.
 
 
 
