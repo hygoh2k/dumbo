@@ -52,7 +52,7 @@ Setup the port in applicationUrl. Example:
 ## Supported API
 
 
-###GET v1/image
+### GET v1/image
 Retrieve the uploaded images from imgur account
 
 Example:
@@ -64,7 +64,7 @@ Returns:
 
 
 
-###POST v1/image/upload
+### POST v1/image/upload
 
 Example:
 https://localhost:5001/v1/image/upload
@@ -84,7 +84,7 @@ Returns:
 {"jobId":"25e90440-5823-4fe9-a40d-0323fbd30079"}
 
 
-###GET v1/image/job?id=<job id>
+### GET v1/image/job?id=(job_id)
 
 Example:
 https://localhost:5001/v1/image/job?id=25e90440-5823-4fe9-a40d-0323fbd30079
